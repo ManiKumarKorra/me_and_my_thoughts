@@ -65,7 +65,7 @@ function noButtonListener() {
         gifMain.src = "https://media.giphy.com/media/QuCslOrnS649PSCnn7/giphy.gif";
         questionMain.innerHTML = "Don’t play with my heart 💞. If there's even a little chance... would you try?";
     } else if (count === 2) {
-        gifMain.src = "https://media.giphy.com/media/QuCslOrnS649PSCnn7/giphy.gif";
+        gifMain.src = "https://i.pinimg.com/originals/6b/1e/b7/6b1eb75915c0359234e21b6557120279.gif";
         questionMain.innerHTML = "You don't like me, fine 💔 at least try naa...";
     } else {
         gifMain.src = "https://media.giphy.com/media/8OPf6xrtXi3QEcu5h9/giphy.gif";
