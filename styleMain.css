@@ -113,3 +113,34 @@ body {
 .buttons-container {
     position: relative;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .wrapper {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .gif {
+    max-width: 300px;
+    margin: 20px auto;
+    display: block;
+  }
+  
+  .btn-group {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 10px;
+    cursor: pointer;
+    position: relative;
+  }
+  
