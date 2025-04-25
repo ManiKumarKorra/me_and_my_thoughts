@@ -1,0 +1,13 @@
+  if (count < 2) {
+        gifMain.src = "https://media.giphy.com/media/hbOgjMOUfLdWV2Ty1j/giphy.gif";
+        questionMain.innerHTML = "You don’t love me? 💔 It’s okay, I’m strong… I fight for those I love.";
+    } else if (count >= 2 && count < 4) {
+        gifMain.src = "https://media.giphy.com/media/QuCslOrnS649PSCnn7/giphy.gif";
+        questionMain.innerHTML = "Please don’t play with my heart 💞. If there's even a little chance... would you try?";
+    } else {
+        gifMain.src = "https://media.giphy.com/media/8OPf6xrtXi3QEcu5h9/giphy.gif";
+        questionMain.innerHTML = "Even if it's a no... can we at least talk? I just want to hear your voice again. 💬";
+    }
+
+
+

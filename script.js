@@ -25,7 +25,9 @@ startButton.addEventListener("click", () => {
     <div class="wrapper">
         <div class="top-section">
             <h2 class="question">Hello ${input}! Would you make my day and say yes to a date with me?</h2>
-            <img class="gif" alt="gif" src="https://media.giphy.com/media/0kDdAFAELmvvFNUKim/giphy.gif">
+            <div class="gif-container">
+                <img class="gif" alt="gif" src="https://media.giphy.com/media/0kDdAFAELmvvFNUKim/giphy.gif">
+            </div>
         </div>
         <div class="buttons-container">
             <button class="yes-btn">Yes</button>
@@ -87,48 +89,56 @@ function noButtonListener() {
     
     positionNoButton();
     count++;
-}
+}function positionNoButton() {
+    if (!noButton || !gifMain) return;
 
-function positionNoButton() {
-    if (!noButton || !yesButton) return;
-    
-    const container = document.querySelector('.buttons-container');
-    if (!container) return;
-    
-    const containerRect = container.getBoundingClientRect();
+    const gifContainer = document.querySelector('.gif-container');
+    const container = document.querySelector('.wrapper');
     const yesBtnRect = yesButton.getBoundingClientRect();
+    const questionRect = questionMain.getBoundingClientRect();
+    const gifRect = gifContainer.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
     const noBtnRect = noButton.getBoundingClientRect();
-    
-    // Calculate safe area that excludes the Yes button's space
+
+    const restrictedZones = [yesBtnRect, questionRect];
+
     const safeArea = {
-        left: containerRect.left,
-        right: containerRect.right - noBtnRect.width,
-        top: yesBtnRect.bottom + 10, // Start below Yes button
-        bottom: containerRect.bottom - noBtnRect.height
+        minX: 20,
+        maxX: containerRect.width - noBtnRect.width - 20,
+        minY: 20,
+        maxY: containerRect.height - noBtnRect.height - 20
     };
-    
-    // Only move if there's valid space
-    if (safeArea.top < safeArea.bottom) {
-        const randomX = Math.max(
-            safeArea.left,
-            Math.min(
-                safeArea.right - noBtnRect.width,
-                Math.random() * containerRect.width
-            )
-        );
-        const randomY = Math.max(
-            safeArea.top,
-            Math.min(
-                safeArea.bottom - noBtnRect.height,
-                yesBtnRect.bottom + 10 + Math.random() * (safeArea.bottom - safeArea.top)
-            )
-        );
-        
-        noButton.style.position = 'absolute';
-        noButton.style.left = `${randomX - containerRect.left}px`;
-        noButton.style.top = `${randomY - containerRect.top}px`;
-    } else {
-        // Fallback position to right of Yes button
-        noButton.style.position = 'static';
-    }
+
+    let attempts = 0;
+    let randomX, randomY, noBtnNewRect;
+
+    do {
+        randomX = Math.random() * (safeArea.maxX - safeArea.minX) + safeArea.minX;
+        randomY = Math.random() * (safeArea.maxY - safeArea.minY) + safeArea.minY;
+
+        // Simulate where the button would be
+        noBtnNewRect = {
+            left: randomX + containerRect.left,
+            top: randomY + containerRect.top,
+            right: randomX + containerRect.left + noBtnRect.width,
+            bottom: randomY + containerRect.top + noBtnRect.height
+        };
+
+        // Check if it overlaps any restricted area
+        const overlaps = restrictedZones.some(zone => {
+            return !(
+                noBtnNewRect.right < zone.left ||
+                noBtnNewRect.left > zone.right ||
+                noBtnNewRect.bottom < zone.top ||
+                noBtnNewRect.top > zone.bottom
+            );
+        });
+
+        if (!overlaps) break;
+        attempts++;
+    } while (attempts < 50); // Prevent infinite loop
+
+    noButton.style.position = "absolute";
+    noButton.style.left = `${randomX}px`;
+    noButton.style.top = `${randomY}px`;
 }
